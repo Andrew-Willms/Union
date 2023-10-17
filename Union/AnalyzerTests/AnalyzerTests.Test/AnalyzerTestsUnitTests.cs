@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VerifyCS = AnalyzerTests.Test.CSharpCodeFixVerifier<
 	AnalyzerTests.AnalyzerTestsAnalyzer,
@@ -14,7 +15,7 @@ public class AnalyzerTestsUnitTest {
 	//No diagnostics expected to show up
 	[TestMethod]
 	public async Task TestMethod1() {
-		var test = @"";
+		string test = @"";
 
 		await VerifyCS.VerifyAnalyzerAsync(test);
 	}
@@ -22,7 +23,7 @@ public class AnalyzerTestsUnitTest {
 	//Diagnostic and CodeFix both triggered and checked for
 	[TestMethod]
 	public async Task TestMethod2() {
-		var test = @"
+		string test = @"
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -37,7 +38,7 @@ public class AnalyzerTestsUnitTest {
         }
     }";
 
-		var fixtest = @"
+		string fixtest = @"
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -52,7 +53,7 @@ public class AnalyzerTestsUnitTest {
         }
     }";
 
-		var expected = VerifyCS.Diagnostic("AnalyzerTests").WithLocation(0).WithArguments("TypeName");
+		DiagnosticResult expected = VerifyCS.Diagnostic("AnalyzerTests").WithLocation(0).WithArguments("TypeName");
 		await VerifyCS.VerifyCodeFixAsync(test, expected, fixtest);
 	}
 
