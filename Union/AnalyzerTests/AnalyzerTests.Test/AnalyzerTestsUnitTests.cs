@@ -4,21 +4,22 @@ using VerifyCS = AnalyzerTests.Test.CSharpCodeFixVerifier<
 	AnalyzerTests.AnalyzerTestsAnalyzer,
 	AnalyzerTests.AnalyzerTestsCodeFixProvider>;
 
-namespace AnalyzerTests.Test {
-	[TestClass]
-	public class AnalyzerTestsUnitTest {
-		//No diagnostics expected to show up
-		[TestMethod]
-		public async Task TestMethod1() {
-			var test = @"";
+namespace AnalyzerTests.Test; 
 
-			await VerifyCS.VerifyAnalyzerAsync(test);
-		}
+[TestClass]
+public class AnalyzerTestsUnitTest {
+	//No diagnostics expected to show up
+	[TestMethod]
+	public async Task TestMethod1() {
+		var test = @"";
 
-		//Diagnostic and CodeFix both triggered and checked for
-		[TestMethod]
-		public async Task TestMethod2() {
-			var test = @"
+		await VerifyCS.VerifyAnalyzerAsync(test);
+	}
+
+	//Diagnostic and CodeFix both triggered and checked for
+	[TestMethod]
+	public async Task TestMethod2() {
+		var test = @"
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -33,7 +34,7 @@ namespace AnalyzerTests.Test {
         }
     }";
 
-			var fixtest = @"
+		var fixtest = @"
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -48,8 +49,7 @@ namespace AnalyzerTests.Test {
         }
     }";
 
-			var expected = VerifyCS.Diagnostic("AnalyzerTests").WithLocation(0).WithArguments("TypeName");
-			await VerifyCS.VerifyCodeFixAsync(test, expected, fixtest);
-		}
+		var expected = VerifyCS.Diagnostic("AnalyzerTests").WithLocation(0).WithArguments("TypeName");
+		await VerifyCS.VerifyCodeFixAsync(test, expected, fixtest);
 	}
 }
