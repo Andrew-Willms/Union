@@ -8,11 +8,12 @@ using Microsoft.CodeAnalysis.VisualBasic.Testing;
 
 namespace AnalyzerTests.Test; 
 
-public static partial class VisualBasicAnalyzerVerifier<TAnalyzer>
-	where TAnalyzer : DiagnosticAnalyzer, new() {
+
+
+public static partial class VisualBasicAnalyzerVerifier<TAnalyzer> where TAnalyzer : DiagnosticAnalyzer, new() {
+
 	/// <inheritdoc cref="AnalyzerVerifier{TAnalyzer, TTest, TVerifier}.Diagnostic()"/>
-	public static DiagnosticResult Diagnostic()
-		=> VisualBasicAnalyzerVerifier<TAnalyzer, MSTestVerifier>.Diagnostic();
+	public static DiagnosticResult Diagnostic() => VisualBasicAnalyzerVerifier<TAnalyzer, MSTestVerifier>.Diagnostic();
 
 	/// <inheritdoc cref="AnalyzerVerifier{TAnalyzer, TTest, TVerifier}.Diagnostic(string)"/>
 	public static DiagnosticResult Diagnostic(string diagnosticId)
@@ -24,6 +25,7 @@ public static partial class VisualBasicAnalyzerVerifier<TAnalyzer>
 
 	/// <inheritdoc cref="AnalyzerVerifier{TAnalyzer, TTest, TVerifier}.VerifyAnalyzerAsync(string, DiagnosticResult[])"/>
 	public static async Task VerifyAnalyzerAsync(string source, params DiagnosticResult[] expected) {
+
 		var test = new Test {
 			TestCode = source,
 		};
@@ -31,4 +33,5 @@ public static partial class VisualBasicAnalyzerVerifier<TAnalyzer>
 		test.ExpectedDiagnostics.AddRange(expected);
 		await test.RunAsync(CancellationToken.None);
 	}
+
 }

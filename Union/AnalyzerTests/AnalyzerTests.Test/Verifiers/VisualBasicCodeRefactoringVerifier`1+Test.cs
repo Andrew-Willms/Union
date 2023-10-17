@@ -4,8 +4,11 @@ using Microsoft.CodeAnalysis.VisualBasic.Testing;
 
 namespace AnalyzerTests.Test; 
 
+
+
 public static partial class VisualBasicCodeRefactoringVerifier<TCodeRefactoring>
 	where TCodeRefactoring : CodeRefactoringProvider, new() {
-	public class Test : VisualBasicCodeRefactoringTest<TCodeRefactoring, MSTestVerifier> {
-	}
+
+	public class Test : VisualBasicCodeRefactoringTest<TCodeRefactoring, MSTestVerifier>;
+
 }

@@ -5,11 +5,16 @@ using Microsoft.CodeAnalysis.Testing.Verifiers;
 
 namespace AnalyzerTests.Test; 
 
-public static partial class CSharpCodeFixVerifier<TAnalyzer, TCodeFix>
+
+
+public static partial class CSharpCodeFixVerifier<TAnalyzer, TCodeFix> 
 	where TAnalyzer : DiagnosticAnalyzer, new()
 	where TCodeFix : CodeFixProvider, new() {
+	
 	public class Test : CSharpCodeFixTest<TAnalyzer, TCodeFix, MSTestVerifier> {
+	
 		public Test() {
+		
 			SolutionTransforms.Add((solution, projectId) => {
 				var compilationOptions = solution.GetProject(projectId).CompilationOptions;
 				compilationOptions = compilationOptions.WithSpecificDiagnosticOptions(
@@ -19,5 +24,7 @@ public static partial class CSharpCodeFixVerifier<TAnalyzer, TCodeFix>
 				return solution;
 			});
 		}
+
 	}
+
 }

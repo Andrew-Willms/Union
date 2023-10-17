@@ -6,6 +6,8 @@ using VerifyCS = AnalyzerTests.Test.CSharpCodeFixVerifier<
 
 namespace AnalyzerTests.Test; 
 
+
+
 [TestClass]
 public class AnalyzerTestsUnitTest {
 	//No diagnostics expected to show up

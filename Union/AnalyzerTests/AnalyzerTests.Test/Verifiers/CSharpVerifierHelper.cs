@@ -5,7 +5,10 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace AnalyzerTests.Test; 
 
+
+
 internal static class CSharpVerifierHelper {
+
 	/// <summary>
 	/// By default, the compiler reports diagnostics for nullable reference types at
 	/// <see cref="DiagnosticSeverity.Warning"/>, and the analyzer test framework defaults to only validating
@@ -27,4 +30,5 @@ internal static class CSharpVerifierHelper {
 
 		return nullableWarnings;
 	}
+
 }

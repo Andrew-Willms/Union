@@ -4,10 +4,14 @@ using Microsoft.CodeAnalysis.Testing.Verifiers;
 
 namespace AnalyzerTests.Test; 
 
-public static partial class CSharpCodeRefactoringVerifier<TCodeRefactoring>
-	where TCodeRefactoring : CodeRefactoringProvider, new() {
+
+
+public static partial class CSharpCodeRefactoringVerifier<TCodeRefactoring> where TCodeRefactoring : CodeRefactoringProvider, new() {
+
 	public class Test : CSharpCodeRefactoringTest<TCodeRefactoring, MSTestVerifier> {
+
 		public Test() {
+
 			SolutionTransforms.Add((solution, projectId) => {
 				var compilationOptions = solution.GetProject(projectId).CompilationOptions;
 				compilationOptions = compilationOptions.WithSpecificDiagnosticOptions(
@@ -17,5 +21,7 @@ public static partial class CSharpCodeRefactoringVerifier<TCodeRefactoring>
 				return solution;
 			});
 		}
+
 	}
+
 }

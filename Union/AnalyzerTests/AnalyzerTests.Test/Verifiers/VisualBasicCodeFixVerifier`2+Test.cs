@@ -5,9 +5,12 @@ using Microsoft.CodeAnalysis.VisualBasic.Testing;
 
 namespace AnalyzerTests.Test; 
 
+
+
 public static partial class VisualBasicCodeFixVerifier<TAnalyzer, TCodeFix>
 	where TAnalyzer : DiagnosticAnalyzer, new()
 	where TCodeFix : CodeFixProvider, new() {
-	public class Test : VisualBasicCodeFixTest<TAnalyzer, TCodeFix, MSTestVerifier> {
-	}
+
+	public class Test : VisualBasicCodeFixTest<TAnalyzer, TCodeFix, MSTestVerifier>;
+
 }

@@ -9,12 +9,14 @@ using Microsoft.CodeAnalysis.VisualBasic.Testing;
 
 namespace AnalyzerTests.Test; 
 
+
+
 public static partial class VisualBasicCodeFixVerifier<TAnalyzer, TCodeFix>
 	where TAnalyzer : DiagnosticAnalyzer, new()
 	where TCodeFix : CodeFixProvider, new() {
+
 	/// <inheritdoc cref="CodeFixVerifier{TAnalyzer, TCodeFix, TTest, TVerifier}.Diagnostic()"/>
-	public static DiagnosticResult Diagnostic()
-		=> VisualBasicCodeFixVerifier<TAnalyzer, TCodeFix, MSTestVerifier>.Diagnostic();
+	public static DiagnosticResult Diagnostic() => VisualBasicCodeFixVerifier<TAnalyzer, TCodeFix, MSTestVerifier>.Diagnostic();
 
 	/// <inheritdoc cref="CodeFixVerifier{TAnalyzer, TCodeFix, TTest, TVerifier}.Diagnostic(string)"/>
 	public static DiagnosticResult Diagnostic(string diagnosticId)
@@ -26,6 +28,7 @@ public static partial class VisualBasicCodeFixVerifier<TAnalyzer, TCodeFix>
 
 	/// <inheritdoc cref="CodeFixVerifier{TAnalyzer, TCodeFix, TTest, TVerifier}.VerifyAnalyzerAsync(string, DiagnosticResult[])"/>
 	public static async Task VerifyAnalyzerAsync(string source, params DiagnosticResult[] expected) {
+
 		var test = new Test {
 			TestCode = source,
 		};
@@ -44,6 +47,7 @@ public static partial class VisualBasicCodeFixVerifier<TAnalyzer, TCodeFix>
 
 	/// <inheritdoc cref="CodeFixVerifier{TAnalyzer, TCodeFix, TTest, TVerifier}.VerifyCodeFixAsync(string, DiagnosticResult[], string)"/>
 	public static async Task VerifyCodeFixAsync(string source, DiagnosticResult[] expected, string fixedSource) {
+		
 		var test = new Test {
 			TestCode = source,
 			FixedCode = fixedSource,
@@ -52,4 +56,5 @@ public static partial class VisualBasicCodeFixVerifier<TAnalyzer, TCodeFix>
 		test.ExpectedDiagnostics.AddRange(expected);
 		await test.RunAsync(CancellationToken.None);
 	}
+
 }
