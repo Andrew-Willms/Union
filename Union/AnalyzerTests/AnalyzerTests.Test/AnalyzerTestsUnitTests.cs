@@ -10,6 +10,7 @@ namespace AnalyzerTests.Test;
 
 [TestClass]
 public class AnalyzerTestsUnitTest {
+
 	//No diagnostics expected to show up
 	[TestMethod]
 	public async Task TestMethod1() {
@@ -54,4 +55,5 @@ public class AnalyzerTestsUnitTest {
 		var expected = VerifyCS.Diagnostic("AnalyzerTests").WithLocation(0).WithArguments("TypeName");
 		await VerifyCS.VerifyCodeFixAsync(test, expected, fixtest);
 	}
+
 }
