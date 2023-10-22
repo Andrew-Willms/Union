@@ -155,11 +155,11 @@ public class Union<T1, T2> : IEquatable<Union<T1, T2>> {
 	public override string ToString() {
 
 		if (Value1 is not null) {
-			return $"{nameof(Union<T1, T2>)} {{ {nameof(Value1)} ({nameof(T1)}): {Value1} }}";
+			return $"{nameof(Union<T1, T2>)}<{typeof(T1)}, {typeof(T2)}> {{ {nameof(Value1)} ({typeof(T1)}): {Value1} }}";
 		}
 
 		if (Value2 is not null) {
-			return $"{nameof(Union<T1, T2>)} {{ {nameof(Value2)} ({nameof(T1)}): {Value1} }}";
+			return $"{nameof(Union<T1, T2>)}<{typeof(T1)}, {typeof(T2)}> {{ {nameof(Value2)} ({typeof(T2)}): {Value2} }}";
 		}
 
 		throw new UnreachableException();
