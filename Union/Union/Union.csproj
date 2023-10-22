@@ -2,18 +2,20 @@
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<LangVersion>preview</LangVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<Authors>Andrew Willms</Authors>
 		<Title>Union</Title>
+		<PackageId>Commonaught.Union</PackageId>
+		<Description></Description>
 		<RepositoryUrl>https://github.com/Andrew-Willms/Union</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/Andrew-Willms/Union</PackageProjectUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageLicenseUrl>https://github.com/Andrew-Willms/Union/blob/main/LICENSE</PackageLicenseUrl>
-		<PackageId>Commonaught.Union</PackageId>
 	</PropertyGroup>
 
 </Project>
