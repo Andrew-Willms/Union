@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnalyzerTests.Test", "Analy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnalyzerTests.Vsix", "AnalyzerTests\AnalyzerTests.Vsix\AnalyzerTests.Vsix.csproj", "{56B9DF00-A02D-4ABB-AE21-77B0E3655674}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Union", "Union\Union.csproj", "{5764C8DB-5D05-4DC8-BF4D-2D4ADD033AC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Union", "Union\Union.csproj", "{5764C8DB-5D05-4DC8-BF4D-2D4ADD033AC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoughWork", "RoughWork\RoughWork.csproj", "{8993982A-A5FB-4DA1-8C66-3E19097CF9C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{5764C8DB-5D05-4DC8-BF4D-2D4ADD033AC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5764C8DB-5D05-4DC8-BF4D-2D4ADD033AC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5764C8DB-5D05-4DC8-BF4D-2D4ADD033AC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8993982A-A5FB-4DA1-8C66-3E19097CF9C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8993982A-A5FB-4DA1-8C66-3E19097CF9C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8993982A-A5FB-4DA1-8C66-3E19097CF9C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8993982A-A5FB-4DA1-8C66-3E19097CF9C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
