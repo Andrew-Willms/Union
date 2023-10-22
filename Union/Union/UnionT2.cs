@@ -12,7 +12,7 @@ public class Union<T1, T2> : IEquatable<Union<T1, T2>> {
 	public static implicit operator Union<T1, T2>(T1 value) => new(value);
 	public static implicit operator Union<T1, T2>(T2 value) => new(value);
 
-	private Union(T1 value) {
+	protected Union(T1 value) {
 
 		if (value is null) {
 			throw new ArgumentNullException(nameof(value));
@@ -21,7 +21,7 @@ public class Union<T1, T2> : IEquatable<Union<T1, T2>> {
 		Value1 = value;
 	}
 
-	private Union(T2 value) {
+	protected Union(T2 value) {
 
 
 		if (value is null) {
@@ -33,6 +33,7 @@ public class Union<T1, T2> : IEquatable<Union<T1, T2>> {
 
 
 
+	// TODO: add docs
 	public void Switch(Action<T1> action1, Action<T2> action2) {
 
 		if (Value1 is not null) {
@@ -146,6 +147,19 @@ public class Union<T1, T2> : IEquatable<Union<T1, T2>> {
 
 		if (Value2 is not null) {
 			return Value2.GetHashCode();
+		}
+
+		throw new UnreachableException();
+	}
+
+	public override string ToString() {
+
+		if (Value1 is not null) {
+			return $"{nameof(Union<T1, T2>)} {{ {nameof(Value1)} ({nameof(T1)}): {Value1} }}";
+		}
+
+		if (Value2 is not null) {
+			return $"{nameof(Union<T1, T2>)} {{ {nameof(Value2)} ({nameof(T1)}): {Value1} }}";
 		}
 
 		throw new UnreachableException();
