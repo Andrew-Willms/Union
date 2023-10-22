@@ -1,9 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Authors>Andrew Willms</Authors>
+		<Title>Union</Title>
+		<RepositoryUrl>https://github.com/Andrew-Willms/Union</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/Andrew-Willms/Union</PackageProjectUrl>
+		<PackageLicenseUrl>https://github.com/Andrew-Willms/Union/blob/main/LICENSE</PackageLicenseUrl>
+		<PackageId>Commonaught.Union</PackageId>
+	</PropertyGroup>
 
 </Project>
