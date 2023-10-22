@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Union", "Union\Union.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoughWork", "RoughWork\RoughWork.csproj", "{8993982A-A5FB-4DA1-8C66-3E19097CF9C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Union.SourceGenerator", "Union.SourceGenerator\Union.SourceGenerator.csproj", "{7F6E344C-C4FC-4375-BBF8-BA1903B90B29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{8993982A-A5FB-4DA1-8C66-3E19097CF9C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8993982A-A5FB-4DA1-8C66-3E19097CF9C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8993982A-A5FB-4DA1-8C66-3E19097CF9C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F6E344C-C4FC-4375-BBF8-BA1903B90B29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F6E344C-C4FC-4375-BBF8-BA1903B90B29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F6E344C-C4FC-4375-BBF8-BA1903B90B29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F6E344C-C4FC-4375-BBF8-BA1903B90B29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
