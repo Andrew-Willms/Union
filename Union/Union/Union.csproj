@@ -13,7 +13,7 @@
 		<PackageId>Commonaught.Union</PackageId>
 		<Description></Description>
 		<RepositoryUrl>https://github.com/Andrew-Willms/Union</RepositoryUrl>
-		<PackageProjectUrl>https://github.com/Andrew-Willms/Union</PackageProjectUrl>
+		<PackageProjectUrl>https://github.com/Andrew-Willms/Union/Union</PackageProjectUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageLicenseUrl>https://github.com/Andrew-Willms/Union/blob/main/LICENSE</PackageLicenseUrl>
 	</PropertyGroup>
