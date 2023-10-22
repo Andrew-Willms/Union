@@ -1,13 +1,22 @@
-﻿using Union;
+﻿using OneOf;
 
-// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
-
+namespace RoughWork;
 
 
 
-Union<int, double> test = 2;
+public static class Program {
 
-Console.WriteLine(test);
+	public static void Main() {
 
-test.NativeSwitch();
+	}
+
+}
+
+
+
+
+
+[GenerateOneOf]
+public partial class ThingResult : OneOfBase<int, double> {
+
+}
