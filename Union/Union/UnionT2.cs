@@ -89,6 +89,19 @@ public class Union<T1, T2> : IEquatable<Union<T1, T2>> {
 		throw new UnreachableException();
 	}
 
+	public object NativeSwitch() {
+
+		if (Value1 is not null) {
+			return Value1;
+		}
+
+		if (Value2 is not null) {
+			return Value2;
+		}
+
+		throw new UnreachableException();
+	}
+
 
 
 	public bool Equals(Union<T1, T2>? other) {
