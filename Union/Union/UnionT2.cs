@@ -6,6 +6,7 @@ namespace Union;
 
 
 
+// todo add docs to class?
 public class Union<T1, T2> : IEquatable<Union<T1, T2>> {
 
 	private readonly T1? Value1;
