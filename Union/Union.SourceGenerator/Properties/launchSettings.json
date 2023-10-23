@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Source Generator Debug": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\RoughWork\\RoughWork.csproj"
+    }
+  }
+}
