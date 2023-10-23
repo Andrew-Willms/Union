@@ -14,8 +14,8 @@ namespace Union.SourceGenerator;
 [Generator]
 public class UnionGenerator : IIncrementalGenerator {
 
-	//private static readonly string AttributeNameSpace = $""
-	private static readonly string AttributeName = typeof(GenerateUnionAttribute).AssemblyQualifiedName!;
+	private static readonly string AttributeNameSpace = typeof(GenerateUnionAttribute).Namespace!;
+	private const string AttributeName = nameof(GenerateUnionAttribute)!;
 
 	public void Initialize(IncrementalGeneratorInitializationContext context) {
 
@@ -42,8 +42,9 @@ public class UnionGenerator : IIncrementalGenerator {
 
 		INamedTypeSymbol? typeSymbol = context.SemanticModel.GetDeclaredSymbol(classDeclarationSyntax);
 
-		AttributeData? attributeData = typeSymbol?.GetAttributes().FirstOrDefault(ad =>
-			string.Equals(ad.AttributeClass?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), $"global::{AttributeName}"));
+		AttributeData ? attributeData = typeSymbol?.GetAttributes().FirstOrDefault(ad => string.Equals(
+			ad.AttributeClass?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), 
+			$"global::{AttributeNameSpace}.{AttributeName}"));
 
 		return attributeData is null ? null : typeSymbol;
 	}
