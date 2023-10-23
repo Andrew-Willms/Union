@@ -5,6 +5,7 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>preview</LangVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<IncludeContentInPack>true</IncludeContentInPack>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -14,8 +15,11 @@
 		<Description></Description>
 		<RepositoryUrl>https://github.com/Andrew-Willms/Union</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/Andrew-Willms/Union/Union</PackageProjectUrl>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageLicenseUrl>https://github.com/Andrew-Willms/Union/blob/main/LICENSE</PackageLicenseUrl>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="../../LICENSE.md" Pack="true" PackagePath="" Visible="true" />
+	</ItemGroup>
 
 </Project>
