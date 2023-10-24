@@ -14,7 +14,7 @@ namespace Union.SourceGenerator;
 [Generator]
 public class UnionGenerator : IIncrementalGenerator {
 
-	private static readonly string AttributeName = typeof(GenerateUnionAttribute).FullName!;
+	private static readonly string AttributeName = typeof(GenerateUnionAttribute).FullName!; // todo add global:: to this part so the string inerpolation doens't have to be done every time
 
 	public void Initialize(IncrementalGeneratorInitializationContext context) {
 
