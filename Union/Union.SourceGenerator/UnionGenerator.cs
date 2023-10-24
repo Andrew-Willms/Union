@@ -37,16 +37,17 @@ public class UnionGenerator : IIncrementalGenerator {
 	// todo first or default attribute won't work if there are multiple attributes
 	private static INamedTypeSymbol? SyntaxToSymbol(GeneratorSyntaxContext context) {
 
-		ClassDeclarationSyntax classDeclarationSyntax = (ClassDeclarationSyntax)context.Node;
+		if (context.Node is not ClassDeclarationSyntax classDeclarationSyntax) {
+			throw new InvalidOperationException($"{nameof(SyntaxFilter)} should filter out non {nameof(ClassDeclarationSyntax)} nodes.");
+		}
 
 		INamedTypeSymbol? typeSymbol = context.SemanticModel.GetDeclaredSymbol(classDeclarationSyntax);
-		
-		AttributeData ? attributeData = typeSymbol?
-			.GetAttributes()
-			.FirstOrDefault(ad => string.Equals(
-				ad.AttributeClass?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), AttributeName));
 
-		return attributeData is null ? null : typeSymbol;
+		bool? hasGeneratorAttribute = typeSymbol?
+			.GetAttributes()
+			.Any(x => string.Equals(x.AttributeClass?.ToQualifiedString(), AttributeName));
+
+		return hasGeneratorAttribute is true ? typeSymbol : null;
 	}
 
 
@@ -182,6 +183,11 @@ public static class CollectionExtensions {
 	public static string Join(this IEnumerable<string> array, string separator) {
 
 		return string.Join(separator, array);
+	}
+
+	// todo move to a more appropriate place
+	public static string ToQualifiedString(this ISymbol typeSymbol) {
+		return typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
 	}
 
 }
