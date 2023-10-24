@@ -57,6 +57,7 @@ public class UnionGenerator : IIncrementalGenerator {
 		}
 
 		IEnumerable<INamedTypeSymbol> distinctClasses = source.classes.Distinct();
+		List<string> fileNames = new();
 
 		foreach (INamedTypeSymbol typeSymbol in distinctClasses) {
 
@@ -66,7 +67,16 @@ public class UnionGenerator : IIncrementalGenerator {
 				continue;
 			}
 
-			context.AddSource($"{typeSymbol.ContainingNamespace}_{typeSymbol.Name}.g.cs", classSource);
+			// todo improve the filename-uniqueifying (currentily messing with file extensions)
+			string fileName = $"{typeSymbol.ContainingNamespace}_{typeSymbol.Name}.g.cs";
+
+			while (fileNames.Contains(fileName)) {
+
+				fileName += "1";
+			}
+
+			fileNames.Add(fileName);
+			context.AddSource(fileName, classSource);
 		}
 	}
 
