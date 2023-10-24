@@ -6,6 +6,7 @@ namespace Union.SourceGenerator;
 
 public class DiagnosticDescriptors {
 
+	// todo fill out analyzer releases files
 	public static readonly DiagnosticDescriptor TestError = new(
 		id: "UnionGenerator_0",
 		title: "Class must be top level",
