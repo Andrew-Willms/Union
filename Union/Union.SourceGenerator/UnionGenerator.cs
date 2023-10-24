@@ -67,7 +67,7 @@ public class UnionGenerator : IIncrementalGenerator {
 				continue;
 			}
 
-			// todo improve the filename-uniqueifying (currentily messing with file extensions)
+			// todo improve the filename-uniqueifying (currently messing with file extensions)
 			string fileName = $"{typeSymbol.ContainingNamespace}_{typeSymbol.Name}.g.cs";
 
 			while (fileNames.Contains(fileName)) {
