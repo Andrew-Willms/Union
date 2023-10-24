@@ -15,7 +15,7 @@ public class Union<T1, T2> : IEquatable<Union<T1, T2>> {
 	public static implicit operator Union<T1, T2>(T1 value) => new(value);
 	public static implicit operator Union<T1, T2>(T2 value) => new(value);
 
-	protected Union(T1 value) {
+	private Union(T1 value) {
 
 		if (value is null) {
 			throw new ArgumentNullException(nameof(value));
@@ -24,7 +24,7 @@ public class Union<T1, T2> : IEquatable<Union<T1, T2>> {
 		Value1 = value;
 	}
 
-	protected Union(T2 value) {
+	private Union(T2 value) {
 
 
 		if (value is null) {
@@ -32,6 +32,12 @@ public class Union<T1, T2> : IEquatable<Union<T1, T2>> {
 		}
 
 		Value2 = value;
+	}
+
+	protected Union(Union<T1, T2> other) {
+
+		Value1 = other.Value1;
+		Value2 = other.Value2;
 	}
 
 
