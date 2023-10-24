@@ -35,6 +35,7 @@ public class UnionGenerator : IIncrementalGenerator {
 		       && classDeclaration.Modifiers.Any(SyntaxKind.PartialKeyword);
 	}
 
+	// todo first or default attribute won't work if there are multiple attributes
 	private static INamedTypeSymbol? SyntaxToSymbol(GeneratorSyntaxContext context) {
 
 		ClassDeclarationSyntax classDeclarationSyntax = (ClassDeclarationSyntax)context.Node;
