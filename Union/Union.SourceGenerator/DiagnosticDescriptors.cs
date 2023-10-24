@@ -7,10 +7,24 @@ namespace Union.SourceGenerator;
 public class DiagnosticDescriptors {
 
 	// todo fill out analyzer releases files
-	public static readonly DiagnosticDescriptor TestError = new(
-		id: "UnionGenerator_0",
-		title: "Class must be top level",
-		messageFormat: "Class '{0}' using OneOfGenerator must be top level",
+
+	// todo updated text
+	public static readonly DiagnosticDescriptor ClassWithAttributeMustBePartial = new(
+		id: "UnionGenerator_1",
+		title: "Union class must not be a nested class",
+		messageFormat: "Class '{0}' using UnionGeneratorAttribute not be a nested class",
+		category: "UnionGenerator",
+		DiagnosticSeverity.Error,
+		isEnabledByDefault: true,
+		description: "",
+		helpLinkUri: "",
+		customTags: new[] { "" });
+
+	// todo updated text
+	public static readonly DiagnosticDescriptor ClassWithAttributeMustInheritFromUnion = new(
+		id: "UnionGenerator_1",
+		title: "Union class must not be a nested class",
+		messageFormat: "Class '{0}' using UnionGeneratorAttribute not be a nested class",
 		category: "UnionGenerator",
 		DiagnosticSeverity.Error,
 		isEnabledByDefault: true,

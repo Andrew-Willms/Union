@@ -14,7 +14,7 @@ namespace Union.SourceGenerator;
 [Generator]
 public class UnionGenerator : IIncrementalGenerator {
 
-	private static readonly string AttributeName = typeof(GenerateUnionAttribute).FullName!; // todo add global:: to this part so the string inerpolation doens't have to be done every time
+	private static readonly string AttributeName = $"global::{typeof(GenerateUnionAttribute).FullName!}";
 
 	public void Initialize(IncrementalGeneratorInitializationContext context) {
 
@@ -31,8 +31,7 @@ public class UnionGenerator : IIncrementalGenerator {
 	}
 
 	private static bool SyntaxFilter(SyntaxNode node) {
-		return node is ClassDeclarationSyntax { AttributeLists.Count: > 0, BaseList.Types.Count: > 0 } classDeclaration 
-		       && classDeclaration.Modifiers.Any(SyntaxKind.PartialKeyword);
+		return node is ClassDeclarationSyntax { AttributeLists.Count: > 0 };
 	}
 
 	// todo first or default attribute won't work if there are multiple attributes
@@ -41,9 +40,11 @@ public class UnionGenerator : IIncrementalGenerator {
 		ClassDeclarationSyntax classDeclarationSyntax = (ClassDeclarationSyntax)context.Node;
 
 		INamedTypeSymbol? typeSymbol = context.SemanticModel.GetDeclaredSymbol(classDeclarationSyntax);
-
-		AttributeData ? attributeData = typeSymbol?.GetAttributes().FirstOrDefault(ad => string.Equals(
-			ad.AttributeClass?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), $"global::{AttributeName}"));
+		
+		AttributeData ? attributeData = typeSymbol?
+			.GetAttributes()
+			.FirstOrDefault(ad => string.Equals(
+				ad.AttributeClass?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), AttributeName));
 
 		return attributeData is null ? null : typeSymbol;
 	}
@@ -83,6 +84,8 @@ public class UnionGenerator : IIncrementalGenerator {
 	}
 
 	private static string? ProcessClass(INamedTypeSymbol classSymbol, SourceProductionContext context) {
+
+		ImmutableArray<SyntaxReference> test = classSymbol.DeclaringSyntaxReferences;
 
 		Location? attributeLocation = classSymbol.Locations.FirstOrDefault() ?? Location.None;
 
