@@ -67,16 +67,17 @@ public class UnionGenerator : IIncrementalGenerator {
 				continue;
 			}
 
-			// todo improve the filename-uniqueifying (currently messing with file extensions)
-			string fileName = $"{typeSymbol.ContainingNamespace}_{typeSymbol.Name}.g.cs";
+			string fileName = $"{typeSymbol.ContainingNamespace}_{typeSymbol.Name}";
+			int fileNumber = 0;
 
-			while (fileNames.Contains(fileName)) {
-
-				fileName += "1";
+			while (fileNames.Contains(fileName + fileNumber)) {
+				fileNumber++;
 			}
 
+			fileName += fileNumber;
+
 			fileNames.Add(fileName);
-			context.AddSource(fileName, classSource);
+			context.AddSource($"{fileName}.g.cs", classSource);
 		}
 	}
 
