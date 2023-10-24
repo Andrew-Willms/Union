@@ -20,8 +20,8 @@ public class UnionGenerator : IIncrementalGenerator {
 
 		IncrementalValuesProvider<INamedTypeSymbol> classDeclarations = context.SyntaxProvider
 			.CreateSyntaxProvider(
-				predicate: static (syntaxNode, _) => IsSyntaxTargetForGeneration(syntaxNode),
-				transform: static (syntaxContext, _) => GetSemanticTargetForGeneration(syntaxContext))
+				predicate: static (syntaxNode, _) => SyntaxFilter(syntaxNode),
+				transform: static (syntaxContext, _) => SyntaxToSymbol(syntaxContext))
 			.Where(static classDeclarationSyntax => classDeclarationSyntax is not null)!;
 
 		IncrementalValueProvider<(Compilation, ImmutableArray<INamedTypeSymbol>)> unionClasses =
@@ -30,12 +30,12 @@ public class UnionGenerator : IIncrementalGenerator {
 		context.RegisterSourceOutput(unionClasses, Execute);
 	}
 
-	private static bool IsSyntaxTargetForGeneration(SyntaxNode node) {
+	private static bool SyntaxFilter(SyntaxNode node) {
 		return node is ClassDeclarationSyntax { AttributeLists.Count: > 0, BaseList.Types.Count: > 0 } classDeclaration 
 		       && classDeclaration.Modifiers.Any(SyntaxKind.PartialKeyword);
 	}
 
-	private static INamedTypeSymbol? GetSemanticTargetForGeneration(GeneratorSyntaxContext context) {
+	private static INamedTypeSymbol? SyntaxToSymbol(GeneratorSyntaxContext context) {
 
 		ClassDeclarationSyntax classDeclarationSyntax = (ClassDeclarationSyntax)context.Node;
 
@@ -99,7 +99,7 @@ public class UnionGenerator : IIncrementalGenerator {
 			}
 		}
 
-		return GenerateClassSource(classSymbol, classSymbol.BaseType.TypeParameters, typeArguments);
+		return GenerateClassSource(classSymbol, classSymbol.BaseType);
 
 		void CreateDiagnosticError(DiagnosticDescriptor descriptor) {
 			context.ReportDiagnostic(Diagnostic.Create(descriptor, attributeLocation, classSymbol.Name,
@@ -107,18 +107,14 @@ public class UnionGenerator : IIncrementalGenerator {
 		}
 	}
 
-	private static string GenerateClassSource(
-		INamedTypeSymbol classSymbol,
-		ImmutableArray<ITypeParameterSymbol> typeParameters, 
-		ImmutableArray<ITypeSymbol> typeArguments) {
-		IEnumerable<(ITypeParameterSymbol param, ITypeSymbol arg)> paramArgPairs = typeParameters.Zip(typeArguments, (param, arg) => (param, arg));
+	private static string GenerateClassSource(INamedTypeSymbol classSymbol, INamedTypeSymbol baseClassSymbol) {
 
-		string unionGenericPart = GetGenericPart(typeArguments);
-		string classNameWithGenericTypes = $"{classSymbol.Name}{GetOpenGenericPart(classSymbol)}";
+		string className = ConcreteName(classSymbol);
+		string baseClassName = ConcreteName(baseClassSymbol);
 
-		string implicitOperators = string.Join("\r\n    \r\n    ", paramArgPairs.Select(
-			x => $"public static implicit operator {classNameWithGenericTypes}" + 
-			     $"({x.arg.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)} value) => new {classNameWithGenericTypes}(value);"));
+		string implicitOperators = baseClassSymbol.TypeArguments
+			.Select(x => $"public static implicit operator {className}({x.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)} value) => new(value);")
+			.Join("\r\n    \r\n    ");
 
 		return new StringBuilder(
 			$$"""
@@ -131,9 +127,9 @@ public class UnionGenerator : IIncrementalGenerator {
 			  
 			  
 			  
-			  partial class {{classNameWithGenericTypes}} {
+			  partial class {{className}} {
 			  
-			      public {{classSymbol.Name}}(Union<{{unionGenericPart}}> value) : base(value) { }
+			      public {{classSymbol.Name}}({{baseClassName}} value) : base(value) { }
 			      
 			      {{implicitOperators}}
 			      
@@ -141,18 +137,36 @@ public class UnionGenerator : IIncrementalGenerator {
 			  """).ToString();
 	}
 
-	// todo: move out to separate library
-	private static string? GetOpenGenericPart(INamedTypeSymbol classSymbol) {
+	// todo benchmark different ways of building the string
+	private static string ConcreteName(INamedTypeSymbol typeSymbol) {
 
-		return classSymbol.TypeArguments.Any()
-			? $"<{GetGenericPart(classSymbol.TypeArguments)}>" 
-			: null;
+		return typeSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+
+		if (!typeSymbol.TypeArguments.Any()) {
+			return typeSymbol.Name;
+		}
+
+		StringBuilder stringBuilder = new(typeSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat) + "<");
+
+		foreach (ITypeSymbol typeArgument in typeSymbol.TypeArguments) {
+
+			stringBuilder.Append(typeArgument.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
+			stringBuilder.Append(", ");
+		}
+
+		stringBuilder.Append(">");
+		return stringBuilder.ToString();
 	}
 
-	// todo: move out to separate library
-	private static string GetGenericPart(ImmutableArray<ITypeSymbol> typeArguments) {
+}
 
-		return string.Join(", ", typeArguments.Select(x => x.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)));
+
+
+public static class CollectionExtensions {
+
+	public static string Join(this IEnumerable<string> array, string separator) {
+
+		return string.Join(separator, array);
 	}
 
 }
