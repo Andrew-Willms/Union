@@ -9,7 +9,7 @@ namespace RoughWork;
 public static class Program {
 
 	public static void Main() {
-
+		Console.WriteLine("hi");
 	}
 
 }
@@ -19,11 +19,7 @@ public static class Program {
 
 
 [GenerateOneOf]
-public partial class ThingResult : OneOfBase<int, double> {
-
-}
+public partial class ThingResult : OneOfBase<int, double>;
 
 [GenerateUnion]
-public partial class OtherThing : Union<int, double> {
-
-}
+public partial class OtherThing : Union<int, double>;
