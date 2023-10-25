@@ -39,3 +39,17 @@ public partial class OtherThing : Union<int, double>;
 
 [GenerateUnion]
 public partial class OtherThing<T> : Union<int, double>;
+
+
+
+public class NestingClass {
+
+	//[GenerateUnion]
+	//public class NestedUnion : Union<int, double>; // still needs support
+
+	//[GenerateOneOf]
+	public class NestedOneOf : OneOfBase<int, double> {
+		protected NestedOneOf(OneOf<int, double> input) : base(input) { }
+	}
+
+}
