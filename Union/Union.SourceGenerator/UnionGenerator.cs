@@ -34,7 +34,6 @@ public class UnionGenerator : IIncrementalGenerator {
 		return node is ClassDeclarationSyntax { AttributeLists.Count: > 0 };
 	}
 
-	// todo first or default attribute won't work if there are multiple attributes
 	private static INamedTypeSymbol? SyntaxToSymbol(GeneratorSyntaxContext context) {
 
 		if (context.Node is not ClassDeclarationSyntax classDeclarationSyntax) {
@@ -86,10 +85,9 @@ public class UnionGenerator : IIncrementalGenerator {
 
 	private static string? ProcessClass(INamedTypeSymbol classSymbol, SourceProductionContext context) {
 
-		ImmutableArray<SyntaxReference> test = classSymbol.DeclaringSyntaxReferences;
-
 		Location? attributeLocation = classSymbol.Locations.FirstOrDefault() ?? Location.None;
 
+		// todo: remove the requirement that the class can't be nested
 		if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default)) {
 			CreateDiagnosticError(DiagnosticDescriptors.UnionClassMustBeNestedError);
 			return null;
