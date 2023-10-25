@@ -3,16 +3,19 @@
 namespace Union.SourceGenerator; 
 
 
+// todo in the read me advertise the benefits over OneOf
+// - can have generic and non generic inheritor of the same name
+// - can have have nested classes
 
 public class DiagnosticDescriptors {
 
 	// todo fill out analyzer releases files
 
-	// todo updated text
+	// todo move this to an analyzer
 	public static readonly DiagnosticDescriptor ClassWithAttributeMustBePartial = new(
 		id: "UnionGenerator_1",
-		title: "Union class must not be a nested class",
-		messageFormat: "Class '{0}' using UnionGeneratorAttribute not be a nested class",
+		title: $"A class with the {nameof(GenerateUnionAttribute)} must be partial",
+		messageFormat: $"Class '{{0}}' using {nameof(GenerateUnionAttribute)} be a partial class",
 		category: "UnionGenerator",
 		DiagnosticSeverity.Error,
 		isEnabledByDefault: true,
@@ -20,17 +23,19 @@ public class DiagnosticDescriptors {
 		helpLinkUri: "",
 		customTags: new[] { "" });
 
-	// todo updated text
+	// todo move this to an analyzer
 	public static readonly DiagnosticDescriptor ClassWithAttributeMustInheritFromUnion = new(
 		id: "UnionGenerator_1",
-		title: "Union class must not be a nested class",
-		messageFormat: "Class '{0}' using UnionGeneratorAttribute not be a nested class",
+		title: $"A class with the {nameof(GenerateUnionAttribute)} must inherit from Union",
+		messageFormat: $"Class '{{0}}' using {nameof(GenerateUnionAttribute)} must inherit from Union",
 		category: "UnionGenerator",
 		DiagnosticSeverity.Error,
 		isEnabledByDefault: true,
 		description: "",
 		helpLinkUri: "",
 		customTags: new[] { "" });
+
+	// todo: in analyzer add warning if class that inherits union doesn't use the attribute
 
 	// todo: add support for nested union classes
 	public static readonly DiagnosticDescriptor UnionClassMustBeNestedError = new(
