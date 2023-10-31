@@ -12,7 +12,7 @@ public class DiagnosticDescriptors {
 	// todo fill out analyzer releases files
 
 	// todo move this to an analyzer
-	public static readonly DiagnosticDescriptor ClassWithAttributeMustBePartial = new(
+	public static readonly DiagnosticDescriptor MustBePartial = new(
 		id: "UnionGenerator_1",
 		title: $"A class with the {nameof(GenerateUnionAttribute)} must be partial",
 		messageFormat: $"Class '{{0}}' using {nameof(GenerateUnionAttribute)} be a partial class",
@@ -24,7 +24,7 @@ public class DiagnosticDescriptors {
 		customTags: new[] { "" });
 
 	// todo move this to an analyzer
-	public static readonly DiagnosticDescriptor ClassWithAttributeMustInheritFromUnion = new(
+	public static readonly DiagnosticDescriptor MustInheritFromUnion = new(
 		id: "UnionGenerator_1",
 		title: $"A class with the {nameof(GenerateUnionAttribute)} must inherit from Union",
 		messageFormat: $"Class '{{0}}' using {nameof(GenerateUnionAttribute)} must inherit from Union",
@@ -38,7 +38,7 @@ public class DiagnosticDescriptors {
 	// todo: in analyzer add warning if class that inherits union doesn't use the attribute
 
 	// todo: add support for nested union classes
-	public static readonly DiagnosticDescriptor UnionClassMustBeNestedError = new(
+	public static readonly DiagnosticDescriptor CantBeNested = new(
 		id: "UnionGenerator_1",
 		title: "Union class must not be a nested class",
 		messageFormat: "Class '{0}' using UnionGeneratorAttribute not be a nested class",
@@ -49,7 +49,7 @@ public class DiagnosticDescriptors {
 		helpLinkUri: "",
 		customTags: new[] { "" });
 
-	public static readonly DiagnosticDescriptor UnionClassMustInheritFromUnion = new(
+	public static readonly DiagnosticDescriptor MustInheritFromUnion2 = new(
 		id: "UnionGenerator_2",
 		title: "Union class must inherit from Union",
 		messageFormat: "Class '{0}' does not inherit from Union",
@@ -71,7 +71,7 @@ public class DiagnosticDescriptors {
 		helpLinkUri: "",
 		customTags: new[] { "" });
 
-	public static readonly DiagnosticDescriptor UserDefinedConversionsToOrFromAnInterfaceAreNotAllowed = new(
+	public static readonly DiagnosticDescriptor InterfacesNotAllowed = new(
 		id: "UnionGenerator_4",
 		title: "User-defined conversions to or from an interface are not allowed",
 		messageFormat: "User-defined conversions to or from an interface are not allowed",
@@ -81,5 +81,22 @@ public class DiagnosticDescriptors {
 		description: "",
 		helpLinkUri: "",
 		customTags: new[] { "" });
+
+}
+
+
+
+public static class DiagnosticDescriptorsExtensions {
+
+	public static void Create(this DiagnosticDescriptor descriptor,
+		Location location,
+		SourceProductionContext context,
+		INamedTypeSymbol classSymbol,
+		DiagnosticSeverity? severity = null) {
+
+		severity ??= descriptor.DefaultSeverity;
+
+		context.ReportDiagnostic(Diagnostic.Create(descriptor, location, classSymbol.Name, severity));
+	}
 
 }

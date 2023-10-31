@@ -89,12 +89,13 @@ public class UnionGenerator : IIncrementalGenerator {
 
 		// todo: remove the requirement that the class can't be nested
 		if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default)) {
-			CreateDiagnosticError(DiagnosticDescriptors.UnionClassMustBeNestedError);
+
+			DiagnosticDescriptors.CantBeNested.Create(attributeLocation, context, classSymbol);
 			return null;
 		}
 
 		if (classSymbol.BaseType?.Name is not "Union" || classSymbol.BaseType.ContainingNamespace.ToString() is not "Union") {
-			CreateDiagnosticError(DiagnosticDescriptors.UnionClassMustInheritFromUnion);
+			DiagnosticDescriptors.MustInheritFromUnion.Create(attributeLocation, context, classSymbol);
 			return null;
 		}
 
@@ -103,22 +104,17 @@ public class UnionGenerator : IIncrementalGenerator {
 		foreach (ITypeSymbol? typeSymbol in typeArguments) {
 
 			if (typeSymbol.Name == nameof(Object)) {
-				CreateDiagnosticError(DiagnosticDescriptors.ObjectIsOneOfType);
+				DiagnosticDescriptors.ObjectIsOneOfType.Create(attributeLocation, context, classSymbol);
 				return null;
 			}
 
 			if (typeSymbol.TypeKind is TypeKind.Interface) {
-				CreateDiagnosticError(DiagnosticDescriptors.UserDefinedConversionsToOrFromAnInterfaceAreNotAllowed);
+				DiagnosticDescriptors.InterfacesNotAllowed.Create(attributeLocation, context, classSymbol);
 				return null;
 			}
 		}
 
 		return GenerateClassSource(classSymbol, classSymbol.BaseType);
-
-		void CreateDiagnosticError(DiagnosticDescriptor descriptor) {
-			context.ReportDiagnostic(Diagnostic.Create(descriptor, attributeLocation, classSymbol.Name,
-				DiagnosticSeverity.Error));
-		}
 	}
 
 	private static string GenerateClassSource(INamedTypeSymbol classSymbol, INamedTypeSymbol baseClassSymbol) {
